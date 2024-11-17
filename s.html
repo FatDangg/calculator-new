@@ -1,0 +1,367 @@
+<html>
+    <style>
+        #background{
+            background-color: #c6e7ff;
+            width: 1530px;
+            height: 843px;
+            top: -1%;
+            left: -1%;
+            position: fixed;
+        }
+        #calculator {
+            width: 320px;
+            height: auto;
+            position: relative;
+            background-color: #ffe1ff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            top: 20%;
+            left: 37%;
+        }
+        #display {
+            background-color: #eea8d8;
+            color: #fff;
+            text-align: right;
+            padding: 20px;
+            font-size: 40;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-family: Digital-7;
+            transition: background 0.3s;
+        }
+        #buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .btn {
+            background-color: #eea8d8;
+            color: #fff;
+            font-size: 1.2rem;
+            padding: 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #f566c8;
+        }
+
+        #equals {
+            background-color: #eea8d8;
+            color: #fff;
+            font-size: 1.2rem;
+            padding: 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+            grid-column: span 2;
+        }
+        #equals:hover{
+            background-color: #f566c8;
+        }
+        #skin-btn-hold {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        #skin-btn {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            background-color: #888;
+            color: white;
+            transition: background 0.3s;
+        }
+        #skin-btn:hover {
+            background-color: #666;
+        }
+    </style>
+<script>
+    function skin1(){
+        document.getElementById('background').style.backgroundColor='#c6e7ff';
+        document.getElementById('calculator').style.top='-100%';
+        document.getElementById('calculator').style.left='-100%';
+        document.getElementById('calculator').style.top='20%';
+        document.getElementById('calculator').style.backgroundColor='#ffe1ff';
+        let buttons = document.getElementsByClassName('btn');
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].style.backgroundColor = '#eea8d8';
+        }
+        document.getElementById('display').style.backgroundColor='#eea8d8';
+        document.getElementById('equals').style.backgroundColor='#eea8d8';
+        document.getElementById('calculator').style.left='37%';
+        console.log('skin1');
+    }
+    function skin2(){
+        document.getElementById('background').style.backgroundColor='#e9c46a';
+        document.getElementById('calculator').style.top='-100%';
+        document.getElementById('calculator').style.left='-100%';
+        document.getElementById('calculator').style.top='20%';
+        document.getElementById('calculator').style.backgroundColor='#f4a261';
+        let buttons = document.getElementsByClassName('btn');
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].style.backgroundColor = '#e0d59c';
+        }
+        document.getElementById('display').style.backgroundColor='#e0d59c';
+        document.getElementById('equals').style.backgroundColor='#e0d59c';
+        document.getElementById('calculator').style.left='37%';
+        console.log('skin2');
+    }
+    function skin3(){
+        document.getElementById('background').style.backgroundColor='#ffcfd2';
+        document.getElementById('calculator').style.top='-100%';
+        document.getElementById('calculator').style.left='-100%';
+        document.getElementById('calculator').style.top='20%';
+        document.getElementById('calculator').style.backgroundColor='#a3c4f3';
+        let buttons = document.getElementsByClassName('btn');
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].style.backgroundColor = '#a3f0b8';
+        }
+        document.getElementById('display').style.backgroundColor='#a3f0b8';
+        document.getElementById('equals').style.backgroundColor='#a3f0b8';
+        document.getElementById('calculator').style.left='37%';
+        console.log('skin3');
+    }
+    function skin4(){
+        document.getElementById('background').style.backgroundColor='#F0F0F0';
+        document.getElementById('calculator').style.top='-100%';
+        document.getElementById('calculator').style.left='-100%';
+        document.getElementById('calculator').style.top='20%';
+        document.getElementById('calculator').style.backgroundColor='#333333';
+        let buttons = document.getElementsByClassName('btn');
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].style.backgroundColor = '#444444';
+        }
+        document.getElementById('display').style.backgroundColor='#222222';
+        document.getElementById('equals').style.backgroundColor='#FF9500';
+        document.getElementById('calculator').style.left='37%';
+        console.log('skin4');
+    }
+    document.addEventListener('keydown', function(event) {
+    const key = event.key;
+    if (!isNaN(parseInt(key))) {
+        displayNumber(parseInt(key));
+        console.log('not a num');
+    } else if (key === '+') {
+        setOperator('+');
+    } else if (key === '-') {
+        setOperator('-');
+    } else if (key === '*') {
+        setOperator('*');
+    } else if (key === '/') {
+        setOperator('/');
+    } else if (key === 'Enter' || key === '=') {
+        calculateResult();
+    } else if (key === 'Escape') {
+        clearDisplay();
+    } else if (key === '.') {
+        addDecimal();
+    } else {
+        document.getElementById('display').innerHTML = "HAHA PLEASE ENTER NUMBER OR OPERATOR";
+    }
+});
+
+</script>
+<body>
+    <div id="background"></div>
+    <div id="calculator">
+    <div id="skin-btn-hold">
+        <button id="skin-btn" onclick="skin1()">Skin 1</button>
+        <button id="skin-btn" onclick="skin2()">Skin 2</button>
+        <button id="skin-btn" onclick="skin3()">Skin 3</button>
+        <button id="skin-btn" onclick="skin4()">Skin 4</button>
+        <button id="skin-btn" href="advanced_calculator.html">Go to Advance Calculator</button>
+    </div>
+    <div id="display">0</div>
+    <div id="buttons">
+            <button class="btn" onclick="squareroot()">√</button>
+            <button class="btn" onclick="square()">x²</button>
+            <button class="btn" onclick="percentage()">%</button>
+            <button class="btn" onclick="backspace()">⌫</button>
+        
+            <button class="btn" onclick="clearDisplay()">AC</button>
+            <button class="btn" onclick="plusminus()">+/-</button>
+            <button class="btn" onclick="addDecimal()">.</button>
+            <button class="btn" onclick="setOperator('/'); console.log('/');">/</button>
+            
+            <button class="btn" onclick="displayNumber(7)">7</button>
+            <button class="btn" onclick="displayNumber(8)">8</button>
+            <button class="btn" onclick="displayNumber(9)">9</button>
+            <button class="btn" onclick="setOperator('*'); console.log('*');">*</button>
+            
+            <button class="btn" onclick="displayNumber(4)">4</button>
+            <button class="btn" onclick="displayNumber(5)">5</button>
+            <button class="btn" onclick="displayNumber(6)">6</button>
+            <button class="btn" onclick="setOperator('+'); console.log('+');">+</button>
+            
+            <button class="btn" onclick="displayNumber(1)">1</button>
+            <button class="btn" onclick="displayNumber(2)">2</button>
+            <button class="btn" onclick="displayNumber(3)">3</button>
+            <button class="btn" onclick="setOperator('-'); console.log('-');">-</button>
+            
+            <button class="btn" onclick="twozero()">00</button>
+            <button class="btn" onclick="displayNumber(0)">0</button>
+            <button id="equals" onclick="calculateResult(); console.log('cal result');">=</button>
+    </div>
+    </div>
+</body>
+<script>
+    //Kyle's iphone password 971101
+    value = 0;
+    let operator = null;
+    let temp = null;
+    let awaitingSecondNumber = false;
+    let decimalAdded = false;
+    let equal_press = false;
+    function squareroot() {
+        value = Math.sqrt(value);
+        document.getElementById('display').innerHTML = value;
+    }
+    function square() {
+    value = value * value;
+    document.getElementById('display').innerHTML = value;
+    }
+    function percentage(){
+        value = value / 100;
+        document.getElementById('display').innerHTML = value;
+    }
+    function backspace() {
+    // Remove the last character from the display
+    let display = document.getElementById('display').innerHTML;
+    if (display.length > 1) {
+        display = display.slice(0, -1); // Remove the last character
+        value = parseFloat(display); // Update value based on new display
+    } else {
+        display = "0"; // Reset display to 0 if last character is deleted
+        value = 0;
+    }
+    document.getElementById('display').innerHTML = display;
+    }
+    function displayNumber(num) {
+        console.log('test');
+        isEqualPresseds();
+    if (value.toString().length >= 15) {
+        document.getElementById('display').innerHTML = "Please enter fewer than 10 digits";
+        console.log('display more than 10');
+        return;
+    }
+    if (awaitingSecondNumber) {
+        document.getElementById('display').innerHTML = '';
+        value = num;
+        awaitingSecondNumber = false;
+        decimalAdded = false;
+        console.log('decimal reseted');
+        document.getElementById('display').innerHTML = value;
+    } else {
+        // Update value and display with the new number
+        if (decimalAdded) {
+            // If decimal mode is active, append the digit after the decimal point
+            document.getElementById('display').innerHTML += num;
+            value = parseFloat(document.getElementById('display').innerHTML);
+        } else {
+            // Standard number handling
+            value = value * 10 + num;
+            document.getElementById('display').innerHTML = value;
+        }
+    }
+    }
+    function addDecimal(){
+    // Check if there's already a decimal point in the current display
+    console.log('go in1');
+    if (!decimalAdded) {
+        console.log('go in2');
+        if (awaitingSecondNumber) {
+            console.log('go in3');
+            // Start fresh if awaiting a new operand, set initial value to '0.'
+            document.getElementById('display').innerHTML = "0.";
+            value = 0;
+            awaitingSecondNumber = false;
+        } else {
+            // Append a decimal point to the display content
+            console.log('go in4');
+            document.getElementById('display').innerHTML = document.getElementById('display').innerHTML+ ".";
+        }
+        decimalAdded = true;
+        console.log('decimal true');
+    }
+}
+    function twozero(){
+        if (decimalAdded) {
+        document.getElementById('display').innerHTML += "00";
+        value = parseFloat(document.getElementById('display').innerHTML);}
+        else{
+        value = value * 100;
+        document.getElementById('display').innerHTML = value;
+        console.log('two zero added-->non after decimal');}
+
+    }
+    function setOperator(op) {
+        if (temp === null) {
+            temp = value;
+        } else if (operator) {
+            calculateResult();
+            temp = parseFloat(document.getElementById('display').innerHTML);
+        }
+        operator = op;
+        equal_press=false;
+        awaitingSecondNumber = true;
+        decimalAdded = false;
+        document.getElementById('display').innerHTML = document.getElementById('display').innerHTML+ " " + operator + " ";
+    }
+    function calculateResult() {
+        let result;
+        if (operator) {
+            switch (operator) {
+                case '+':
+                    result = temp + value;
+                    break;
+                case '-':
+                    result = temp - value;
+                    break;
+                case '*':
+                    result = temp * value;
+                    break;
+                case '/':
+                    result = temp / value;
+                    break;
+            }
+            result=parseFloat(result.toFixed(5));
+            document.getElementById('display').innerHTML = result;
+            value = result;
+            temp = result;
+            operator = '=';
+            decimalAdded = false;
+            equal_press = true;
+        }
+    }
+    function isEqualPresseds() {
+        if (equal_press){
+            clearDisplay();
+        }
+    }
+    function clearDisplay() {
+        value = 0;
+        temp = null;
+        operator = null;
+        awaitingSecondNumber = false;
+        decimalAdded = false;
+        equal_press=false;
+        document.getElementById('display').innerHTML = "0";
+    }
+
+    function plusminus() {
+        value = value * -1;
+        document.getElementById('display').innerHTML = value;
+    }
+</script>
+</html>
