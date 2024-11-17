@@ -22,7 +22,7 @@
             border-radius: 20px;
             padding: 20px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            top: 10%;
+            top: 20%;
             left: 5%;
         }
         #display {
@@ -75,10 +75,111 @@
             font-size: 1rem;
             margin-bottom: 10px;
         }
+        #skin-btn-hold {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        #skin-btn {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            background-color: #888;
+            color: white;
+            transition: background 0.3s;
+        }
+        #skin-btn:hover {
+            background-color: #666;
+        }
     </style>
 </head>
+<script>
+function skin1(){
+    document.getElementById('background').style.backgroundColor='#c6e7ff';
+    // document.getElementById('calculator').style.top='-100%';
+    // document.getElementById('calculator').style.left='-100%';
+    // document.getElementById('calculator').style.top='20%';
+    document.getElementById('calculator').style.backgroundColor='#ffe1ff';
+    let buttons = document.getElementsByClassName('btn');
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].style.backgroundColor = '#eea8d8';
+    }
+    document.getElementById('display').style.backgroundColor='#eea8d8';
+    document.getElementById('equals').style.backgroundColor='#eea8d8';
+    document.getElementById('game-btn').setAttribute('onclick', "window.location.href='Play Super Mario Bros _ HTML5.html'");
+    document.getElementById('game-icon').setAttribute('src', 'icons8-super-mario-50.png');
+    //document.getElementById('calculator').style.left='37%';
+    console.log('skin1');
+}
+function skin2(){
+    document.getElementById('background').style.backgroundColor='#e9c46a';
+    // document.getElementById('calculator').style.top='-100%';
+    // document.getElementById('calculator').style.left='-100%';
+    // document.getElementById('calculator').style.top='20%';
+    document.getElementById('calculator').style.backgroundColor='#f4a261';
+    let buttons = document.getElementsByClassName('btn');
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].style.backgroundColor = '#e0d59c';
+    }
+    document.getElementById('game-btn').setAttribute('onclick', "window.location.href='dino.html'");
+    document.getElementById('game-icon').setAttribute('src', 'png-clipart-tyrannosaurus-dino-t-rex-t-rex-chrome-vr-jump-trex-runner-lava-jump-dinosaur-angle-text-thumbnail-removebg-preview.png');
+    document.getElementById('display').style.backgroundColor='#e0d59c';
+    document.getElementById('equals').style.backgroundColor='#e0d59c';
+    //document.getElementById('calculator').style.left='37%';
+    console.log('skin2');
+}
+function skin3(){
+    document.getElementById('background').style.backgroundColor='#ffcfd2';
+    // document.getElementById('calculator').style.top='-100%';
+    // document.getElementById('calculator').style.left='-100%';
+    // document.getElementById('calculator').style.top='20%';
+    document.getElementById('calculator').style.backgroundColor='#a3c4f3';
+    document.getElementById('game-btn').setAttribute('onclick', "window.location.href='2048.html'");
+    document.getElementById('game-icon').setAttribute('src', '2048_logo.svg.png');
+    console.log('skin3')
+    let buttons = document.getElementsByClassName('btn');
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].style.backgroundColor = '#a3f0b8';
+    }
+    document.getElementById('display').style.backgroundColor='#a3f0b8';
+    document.getElementById('equals').style.backgroundColor='#a3f0b8';
+    //document.getElementById('calculator').style.left='37%';
+    console.log('skin3');
+}
+function skin4(){
+    document.getElementById('background').style.backgroundColor='#F0F0F0';
+    // document.getElementById('calculator').style.top='-100%';
+    // document.getElementById('calculator').style.left='-100%';
+    // document.getElementById('calculator').style.top='20%';
+    document.getElementById('calculator').style.backgroundColor='#333333';
+    let buttons = document.getElementsByClassName('btn');
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].style.backgroundColor = '#444444';
+    }
+    document.getElementById('game-btn').setAttribute('onclick', "window.location.href='flappy-bird-master/index.html'");
+    document.getElementById('game-icon').setAttribute('src', 'flappy-bird-master/flappybird.png');
+    document.getElementById('display').style.backgroundColor='#222222';
+    document.getElementById('equals').style.backgroundColor='#FF9500';
+    //document.getElementById('calculator').style.left='37%';
+    console.log('skin4');
+}
+</script>
 <body>
     <div id="background"></div>
+    <div id="skin-btn-hold">
+        <button id="skin-btn" onclick="skin1()">Skin 1</button>
+        <button id="skin-btn" onclick="skin2()">Skin 2</button>
+        <button id="skin-btn" onclick="skin3()">Skin 3</button>
+        <button id="skin-btn" onclick="skin4()">Skin 4</button>
+        <button id="skin-btn" onclick="window.location.href='index.html'">Go to Basic Calculator</button>
+        <button id="skin-btn" onclick="window.location.href='advanced_calculator.html'">Go to Advance Calculator</button>
+        <button id="skin-btn" onclick="window.location.href='graph.html'">Go to Graphing Calculator</button>
+        
+    </div>
     <div id="calculator">
         <div id="display">0</div>
         <div id="buttons">
@@ -106,10 +207,11 @@
 
     <div id="graph-section">
         <h2>Graphing Calculator</h2>
-        <input id="input-function" type="text" placeholder="Enter function (e.g., y = x^2 + 2x - 3)">
+        <input id="input-function" type="text" placeholder="Enter function (e.g., y=2*x+3 & y=2*x^2+3*x+4)">
         <button class="btn" onclick="plotGraph()">Plot</button>
         <canvas id="graph"></canvas>
     </div>
+    <div style="top: 90%; position: fixed; left: 28%;"><center><a style="font-family: 'Times New Roman', Times, serif; font-size: 40px;">Graphing Function Created By ChatGPT🤣</a></center></div>
 
     <script>
         let value = 0;
@@ -209,7 +311,7 @@
         // Test the equation with a sample value
         eval(equation.replace(/x/g, '1'));
     } catch (error) {
-        alert('Invalid function. Please check your syntax. Example: y = x^2 + 2x - 3');
+        alert('Invalid function. Please check your syntax. Example: y = 2*x+3');
         return;
     }
 
