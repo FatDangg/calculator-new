@@ -1,13 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="stylesheet.css">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon (1).ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graphing Calculator</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        #background {
+            background-color: #c6e7ff;
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: background 1.5s;
+        }
+        #calculator {
+            width: 320px;
+            position: absolute;
+            background-color: #ffe1ff;
+            border-radius: 20px;
+            transition: background 1.5s;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            top: 20%;
+            left: 5%;
+        }
+        #display {
+            background-color: #eea8d8;
+            color: #fff;
+            text-align: right;
+            padding: 20px;
+            font-size: 40px;
+            transition: background 1.5s;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-family: Digital-7, sans-serif;
+        }
+        #buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .btn {
+            background-color: #eea8d8;
+            color: #fff;
+            font-size: 1.2rem;
+            padding: 20px;
+            border-radius: 10px;
+            transition: background 1.5s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #f566c8;
+        }
         #graph-section {
             position: absolute;
             top: 10%;
@@ -18,6 +65,17 @@
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             padding: 20px;
+        }
+        #display {
+            background-color: #eea8d8;
+            color: #fff;
+            text-align: right;
+            padding: 20px;
+            font-size: 40px;
+            transition: background 1.5s;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-family: Digital-7, sans-serif;
         }
         #graph {
             width: 100%;
@@ -30,72 +88,6 @@
             border: 1px solid #ccc;
             font-size: 1rem;
             margin-bottom: 10px;
-        }
-        #background{
-            background-color: #c6e7ff;
-            width: 1530px;
-            height: 843px;
-            top: -1%;
-            left: -1%;
-            position: fixed;
-            transition: background 1.5s;
-        }
-        #calculator {
-            width: 400px;
-            height: auto;
-            position: relative;
-            background-color: #ffe1ff;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            top: 20%;
-            left: 34%;
-            transition: background 1.5s;
-        }
-        #display {
-            background-color: #eea8d8;
-            color: #fff;
-            text-align: right;
-            padding: 20px;
-            font-size: 40;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-family: Digital-7;
-            transition: background 1.5s;
-        }
-        #buttons {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-        }
-        .btn {
-            background-color: #eea8d8;
-            color: #fff;
-            font-size: 1.2rem;
-            padding: 20px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            transition: background 1.5s;
-        }
-
-        .btn:hover {
-            background-color: #f566c8;
-        }
-
-        #equals {
-            background-color: #eea8d8;
-            color: #fff;
-            font-size: 1.2rem;
-            padding: 20px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            transition: background 1.5s;
-            grid-column: span 2;
-        }
-        #equals:hover{
-            background-color: #f566c8;
         }
         #skin-btn-hold {
             position: fixed;
@@ -114,6 +106,23 @@
             color: white;
             transition: background 0.3s;
         }
+        #skin-btn:hover {
+            background-color: #666;
+        }
+        #equals {
+            background-color: #eea8d8;
+            color: #fff;
+            font-size: 1.2rem;
+            padding: 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 1.5s;
+            grid-column: span 2;
+        }
+        #equals:hover{
+            background-color: #f566c8;
+        }
     </style>
 </head>
 <script>
@@ -129,8 +138,6 @@ function skin1(){
     }
     document.getElementById('display').style.backgroundColor='#eea8d8';
     document.getElementById('equals').style.backgroundColor='#eea8d8';
-    document.getElementById('game-btn').setAttribute('onclick', "window.location.href='Play Super Mario Bros _ HTML5.html'");
-    document.getElementById('game-icon').setAttribute('src', 'icons8-super-mario-50.png');
     //document.getElementById('calculator').style.left='37%';
     console.log('skin1');
 }
@@ -144,8 +151,6 @@ function skin2(){
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].style.backgroundColor = '#e0d59c';
     }
-    document.getElementById('game-btn').setAttribute('onclick', "window.location.href='dino.html'");
-    document.getElementById('game-icon').setAttribute('src', 'png-clipart-tyrannosaurus-dino-t-rex-t-rex-chrome-vr-jump-trex-runner-lava-jump-dinosaur-angle-text-thumbnail-removebg-preview.png');
     document.getElementById('display').style.backgroundColor='#e0d59c';
     document.getElementById('equals').style.backgroundColor='#e0d59c';
     //document.getElementById('calculator').style.left='37%';
@@ -157,8 +162,6 @@ function skin3(){
     // document.getElementById('calculator').style.left='-100%';
     // document.getElementById('calculator').style.top='20%';
     document.getElementById('calculator').style.backgroundColor='#a3c4f3';
-    document.getElementById('game-btn').setAttribute('onclick', "window.location.href='2048.html'");
-    document.getElementById('game-icon').setAttribute('src', '2048_logo.svg.png');
     console.log('skin3')
     let buttons = document.getElementsByClassName('btn');
     for (let i = 0; i < buttons.length; i++) {
@@ -179,8 +182,6 @@ function skin4(){
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].style.backgroundColor = '#444444';
     }
-    document.getElementById('game-btn').setAttribute('onclick', "window.location.href='flappy-bird-master/index.html'");
-    document.getElementById('game-icon').setAttribute('src', 'flappy-bird-master/flappybird.png');
     document.getElementById('display').style.backgroundColor='#222222';
     document.getElementById('equals').style.backgroundColor='#FF9500';
     //document.getElementById('calculator').style.left='37%';
@@ -220,12 +221,12 @@ function skin4(){
             <button class="btn" onclick="setOperator('-')">-</button>
             <button class="btn" onclick="displayNumber(0)">0</button>
             <button class="btn" onclick="twozero()">00</button>
-            <button class="btn" onclick="calculateResult()">=</button>
+            <button id="equals" onclick="calculateResult()">=</button>
         </div>
     </div>
 
     <div id="graph-section">
-        <h2>Graphing Calculator</h2>
+        <h2 style="font-family: Digital-7, sans-serif; font-size: 30px;">Graphing Calculator</h2>
         <input id="input-function" type="text" placeholder="Enter function (e.g., y=2*x+3 & y=2*x^2+3*x+4)">
         <button class="btn" onclick="plotGraph()">Plot</button>
         <canvas id="graph"></canvas>
