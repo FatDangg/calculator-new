@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphing Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #background {
+            background-color: #c6e7ff;
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: background 1.5s;
+        }
+        #calculator {
+            width: 320px;
+            position: absolute;
+            background-color: #ffe1ff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            top: 10%;
+            left: 5%;
+        }
+        #display {
+            background-color: #eea8d8;
+            color: #fff;
+            text-align: right;
+            padding: 20px;
+            font-size: 40px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-family: Digital-7, sans-serif;
+        }
+        #buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .btn {
+            background-color: #eea8d8;
+            color: #fff;
+            font-size: 1.2rem;
+            padding: 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #f566c8;
+        }
+        #graph-section {
+            position: absolute;
+            top: 10%;
+            left: 40%;
+            width: 50%;
+            height: 70vh;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+        #graph {
+            width: 100%;
+            height: 90%;
+        }
+        #input-function {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="background"></div>
+    <div id="calculator">
+        <div id="display">0</div>
+        <div id="buttons">
+            <button class="btn" onclick="clearDisplay()">AC</button>
+            <button class="btn" onclick="plusminus()">+/-</button>
+            <button class="btn" onclick="addDecimal()">.</button>
+            <button class="btn" onclick="setOperator('/')">/</button>
+            <button class="btn" onclick="displayNumber(7)">7</button>
+            <button class="btn" onclick="displayNumber(8)">8</button>
+            <button class="btn" onclick="displayNumber(9)">9</button>
+            <button class="btn" onclick="setOperator('*')">*</button>
+            <button class="btn" onclick="displayNumber(4)">4</button>
+            <button class="btn" onclick="displayNumber(5)">5</button>
+            <button class="btn" onclick="displayNumber(6)">6</button>
+            <button class="btn" onclick="setOperator('+')">+</button>
+            <button class="btn" onclick="displayNumber(1)">1</button>
+            <button class="btn" onclick="displayNumber(2)">2</button>
+            <button class="btn" onclick="displayNumber(3)">3</button>
+            <button class="btn" onclick="setOperator('-')">-</button>
+            <button class="btn" onclick="displayNumber(0)">0</button>
+            <button class="btn" onclick="twozero()">00</button>
+            <button class="btn" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+
+    <div id="graph-section">
+        <h2>Graphing Calculator</h2>
+        <div id="equations">
+            <div class="equation-input">
+                <input type="text" class="function-input" placeholder="Enter function (e.g., y = 2*x + 3)">
+                <button class="btn" onclick="removeEquation(this)">Remove</button>
+            </div>
+        </div>
+        <button class="btn" onclick="addEquation()">Add Equation</button>
+        <button class="btn" onclick="plotGraph()">Plot</button>
+        <canvas id="graph"></canvas>
+    </div>
+
+    <script>
+        let value = 0;
+        let operator = null;
+        let temp = null;
+        let awaitingSecondNumber = false;
+        let decimalAdded = false;
+
+        function displayNumber(num) {
+            if (awaitingSecondNumber) {
+                value = num;
+                awaitingSecondNumber = false;
+                decimalAdded = false;
+            } else {
+                value = value * 10 + num;
+            }
+            document.getElementById('display').innerHTML = value;
+        }
+
+        function addDecimal() {
+            if (!decimalAdded) {
+                document.getElementById('display').innerHTML += ".";
+                decimalAdded = true;
+            }
+        }
+
+        function setOperator(op) {
+            if (temp === null) {
+                temp = value;
+            } else if (operator) {
+                calculateResult();
+            }
+            operator = op;
+            awaitingSecondNumber = true;
+        }
+
+        function calculateResult() {
+            let result;
+            switch (operator) {
+                case '+':
+                    result = temp + value;
+                    break;
+                case '-':
+                    result = temp - value;
+                    break;
+                case '*':
+                    result = temp * value;
+                    break;
+                case '/':
+                    result = temp / value;
+                    break;
+                default:
+                    return;
+            }
+            value = result;
+            temp = null;
+            operator = null;
+            document.getElementById('display').innerHTML = result;
+        }
+
+        function clearDisplay() {
+            value = 0;
+            temp = null;
+            operator = null;
+            awaitingSecondNumber = false;
+            decimalAdded = false;
+            document.getElementById('display').innerHTML = "0";
+        }
+
+        function plusminus() {
+            value *= -1;
+            document.getElementById('display').innerHTML = value;
+        }
+
+        function twozero() {
+            value *= 100;
+            document.getElementById('display').innerHTML = value;
+        }
+
+        const graphCanvas = document.getElementById('graph');
+        const graphCtx = graphCanvas.getContext('2d');
+        let graphChart;
+
+function addEquation() {
+    const equationsDiv = document.getElementById('equations');
+    const newEquationDiv = document.createElement('div');
+    newEquationDiv.classList.add('equation-input');
+    newEquationDiv.innerHTML = `
+        <input type="text" class="function-input" placeholder="Enter function (e.g., y = x^2)">
+        <button class="btn" onclick="removeEquation(this)">Remove</button>
+    `;
+    equationsDiv.appendChild(newEquationDiv);
+}
+
+function removeEquation(button) {
+    button.parentElement.remove();
+}
+
+function plotGraph() {
+    const inputs = document.querySelectorAll('.function-input');
+    const datasets = [];
+    const xValues = Array.from({ length: 201 }, (_, i) => -10 + i * 0.1);
+
+    inputs.forEach((input, index) => {
+        const functionText = input.value.trim();
+        const parsedFunction = functionText.match(/y\s*=\s*(.+)/);
+
+        if (!parsedFunction || !parsedFunction[1]) {
+            alert(`Invalid function in input ${index + 1}: Please use the format y = f(x).`);
+            return;
+        }
+
+        const equation = parsedFunction[1].replace(/\^/g, '**');
+        const yValues = [];
+
+        xValues.forEach(x => {
+            try {
+                const y = eval(equation.replace(/x/g, `(${x})`));
+                yValues.push(y);
+            } catch (error) {
+                alert(`Error evaluating function in input ${index + 1}.`);
+                return;
+            }
+        });
+
+        datasets.push({
+            label: functionText,
+            data: yValues,
+            borderColor: getRandomColor(),
+            fill: false,
+        });
+    });
+
+    if (graphChart) {
+        graphChart.destroy();
+    }
+
+    graphChart = new Chart(document.getElementById('graph'), {
+        type: 'line',
+        data: {
+            labels: xValues,
+            datasets: datasets,
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'x-axis',
+                    },
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'y-axis',
+                    },
+                },
+            },
+        },
+    });
+}
+
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+    </script>
+</body>
+</html>
